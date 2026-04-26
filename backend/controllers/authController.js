@@ -1,8 +1,9 @@
 import mongoose  from 'mongoose'
-import User from './models/user.js'
+import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv  from 'dotenv'
+import { generateToken } from '../utils/generateToken.js'
 
 dotenv.config();
 
@@ -16,10 +17,14 @@ export const register = async (req, res)=>{
             password : hashedPassword,
             role
         });
+        const token = generateToken(newUser._id);
+        const userObj = newUser.toObject();
+        delete userObj.password;
         res.json({
             success: true,
             message: "User Register Successfully",
-            data: newUser
+            data: userObj,
+            token: token
         })
     }
     catch(err){
@@ -36,10 +41,10 @@ export const login = async (req,  res) =>{
     const {email, password} = req.body;
     try{
         const user = await User.findOne({email});
-        if(!email){
+        if(!user){
             return res.json({
                 success: false,
-                message: "No email Found",
+                message: "No User Found",
                 data: null
             });
         }
@@ -51,7 +56,15 @@ export const login = async (req,  res) =>{
                 data: null
             });
         }
-
+        const token = generateToken(user._id);
+        const userObj = user.toObject();
+        delete userObj.password;
+        res.json({
+            success: true,
+            message: "User LogIn successfull",
+            data: userObj,
+            token: token
+        })
     }
     catch(err){
         console.error("Login Failed: ", err);
