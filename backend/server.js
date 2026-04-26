@@ -1,0 +1,21 @@
+import  express  from 'express'
+import mongoose from 'mongoose'
+import dotenv from "dotenv";
+
+import connectDB from './config/db.js';
+
+dotenv.config();
+const  app = express();
+
+connectDB();
+
+app.use(express.json());
+
+app.get('/',(req, res)=>{
+    res.send("Hello KishanBazar");
+})
+
+const  port = process.env.PORT || 3000;
+app.listen(port, ()=>{
+    console.log(`The server is live on: http://localhost:${port}`);
+});
