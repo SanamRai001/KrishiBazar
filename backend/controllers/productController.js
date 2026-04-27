@@ -47,3 +47,58 @@ export const  getAProduct = async (req, res) =>{
         });
     }
 };
+export const addProduct = async (req, res) => {
+    const newProduct = req.body;
+    try{
+        const product = await Product.create(newProduct);
+        res.json({
+            success: true,
+            message: "Product Added Successfully",
+            data: product
+        });
+    }
+    catch(err){
+        console.error("Adding Product Failed");
+        res.json({
+            success: false,
+            message: "Product Add Failed"
+        });
+    }
+};
+export  const updateProduct = async (req, res) => {
+    const newProduct = req.body;
+    const productId = req.params.id;
+    try{
+        const product = await Product.findByIdAndUpdate(productId, newProduct, {new: true});
+        res.json({
+            success: true,
+            message: "Product updated Successfully",
+            data: product
+        });
+    }
+    catch(err){
+        console.error("Updating Product Failed");
+        res.json({
+            success: false,
+            message: "Product Update Failed"
+        })
+    }
+};
+export const deleteProduct = async (req, res) => {
+    const productId = req.params.id;
+    try{
+        const product = await Product.findByIdAndDelete(productId);
+        res.json({
+            success: true,
+            message: "Product Deleted Successfully",
+            data: product
+        });
+    }
+    catch(err){
+        console.error("Deleting Product Failed");
+        res.json({
+            success: false,
+            message: "Product Delete Failed"
+        });
+    }
+};
