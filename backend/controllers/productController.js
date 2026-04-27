@@ -14,7 +14,12 @@ export const  getAllProducts = async (req, res) =>{
         .sort({createdAt: -1})
         .skip(skip)
         .limit(limit);
-
+        if(!products){
+            return res.json({
+                success: true,
+                message: "Products are not Available"
+            })
+        }
         res.json({
             success: true,
             message: "Product Fetched Successfully",
@@ -33,6 +38,12 @@ export const  getAProduct = async (req, res) =>{
     const productId = req.params.id;
     try{
         const product = await Product.findById(productId);
+        if(!product){
+            return res.json({
+                success: true,
+                message: "Products are not Available"
+            })
+        }
         res.json({
             success: true,
             message: "Product Fetched Successfully",
