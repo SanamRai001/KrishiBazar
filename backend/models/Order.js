@@ -7,11 +7,12 @@ const orderSchema = new mongoose.Schema(
         items: [
             {
                 product: {type: mongoose.Schema.Types.ObjectId, ref:'Product'},
-                quantity: {type: Number, default: 1, min: 1}
+                quantity: {type: Number, default: 1, min: 1},
+                name: String,
+                price: Number
             }
         ],
         totalPrice: {type: Number, required: true},
-        status: {type: String, required: true},
-        address: {type: String, required: true}
+        shippingAddress: {type: String, required: true}
     }
 )
