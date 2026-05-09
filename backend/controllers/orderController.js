@@ -8,12 +8,26 @@ export const addOrder = async (req, res)=>{
     const {shippingAddress, orderItems, quantity, buyNow} = req.body;
     try{
         let finalItems = [];
+        let  cart = null;
        if(buyNow){
-        finalItems = orderItems;
+        for(const item of orderItems){
+            const productData = await Product.findById(item.product);
+            finalItems.push({
+            product: item.product,
+            quantity: item.quantity,
+            price: productData.price
+            });
+        }
         // orderItems = [{ product, price, quantity}]
        }
        else{
-        const  cart = await Cart.findOne({user: user});
+        cart = await Cart.findOne({user: user});
+        if (!cart || cart.items.length === 0) {
+            return res.json({
+                success: false,
+                message: "Cart is empty"
+            });
+        }
         for (const item of cart.items){
             const productData = await Product.findById(item.product);
             finalItems.push({
@@ -23,8 +37,9 @@ export const addOrder = async (req, res)=>{
             })
         }
        }
+       console.log("FINAL ITEMS:", finalItems);
        const totalPrice = finalItems.reduce((sum, item)=>{
-        return sum = sum + (item.price * item.quantity);
+        return sum + (item.price * item.quantity);
        }, 0);
        const order  = await Order.create({
         user: user,
@@ -33,7 +48,6 @@ export const addOrder = async (req, res)=>{
         shippingAddress: shippingAddress
         });
         if(!buyNow){
-            const cart = await Cart.findOne({user: user});
             cart.items = [];
             await cart.save();
         }
@@ -44,8 +58,8 @@ export const addOrder = async (req, res)=>{
         })
     }
     catch(err){
-        console.log("Error while  adding order");
-        res.json({
+            console.log("Error while adding order:", err.message);
+            console.log(err);        res.json({
             success : false,
             message : "Order adding failed"
         });

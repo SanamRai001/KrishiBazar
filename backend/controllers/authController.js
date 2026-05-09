@@ -2,10 +2,8 @@ import mongoose  from 'mongoose'
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import dotenv  from 'dotenv'
 import { generateToken } from '../utils/generateToken.js'
 
-dotenv.config();
 
 export const register = async (req, res)=>{
     const {name, email, password, role} = req.body;

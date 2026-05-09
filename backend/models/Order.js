@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
-import Product from './Product'
-
+import Product from './Product.js'
+import User  from './User.js'
 const orderSchema = new mongoose.Schema(
     {
         user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
@@ -16,3 +16,6 @@ const orderSchema = new mongoose.Schema(
         shippingAddress: {type: String, required: true}
     }
 )
+const Order  = mongoose.model("Order", orderSchema);
+
+export default Order;
