@@ -1,0 +1,48 @@
+frontend/
+├── public/
+│   └── logo.svg                    ← your K logo here
+│
+├── src/
+│   │
+│   ├── api/
+│   │   └── axiosInstance.js        ← base axios config + JWT header
+│   │
+│   ├── assets/
+│   │   └── logo.svg
+│   │
+│   ├── components/
+│   │   ├── Navbar.jsx              ← logo, search, cart icon, user
+│   │   ├── Footer.jsx
+│   │   ├── ProductCard.jsx         ← card with add to cart + buy now
+│   │   ├── CartItem.jsx            ← single cart row with qty controls
+│   │   ├── SearchBar.jsx           ← search input
+│   │   ├── CategoryFilter.jsx      ← pill buttons (All, Vegetables...)
+│   │   ├── Loader.jsx              ← spinner for loading states
+│   │   └── PrivateRoute.jsx        ← redirect if not logged in
+│   │
+│   ├── context/
+│   │   ├── AuthContext.jsx         ← user, token, login, logout
+│   │   └── CartContext.jsx         ← cart items, count, helpers
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.js              ← shortcut to AuthContext
+│   │   └── useCart.js              ← shortcut to CartContext
+│   │
+│   ├── pages/
+│   │   ├── HomePage.jsx            ← product list, search, filter, pagination
+│   │   ├── ProductPage.jsx         ← single product detail
+│   │   ├── CartPage.jsx            ← cart items + order summary
+│   │   ├── CheckoutPage.jsx        ← address form + place order
+│   │   ├── LoginPage.jsx
+│   │   ├── RegisterPage.jsx
+│   │   └── NotFoundPage.jsx        ← 404
+│   │
+│   ├── utils/
+│   │   └── helpers.js              ← format price, truncate text etc
+│   │
+│   ├── App.jsx                     ← all routes defined here
+│   └── main.jsx                    ← entry point, wrap with providers
+│
+├── .env                            ← VITE_API_URL=http://localhost:5000/api
+├── index.html                      ← change title to "Krishi Bazar" here
+└── package.json

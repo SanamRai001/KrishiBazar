@@ -55,7 +55,7 @@ export const addOrder = async (req, res)=>{
             success: true,
             message: "Order successfully Placesd",
             data: order
-        })
+        });
     }
     catch(err){
             console.log("Error while adding order:", err.message);
