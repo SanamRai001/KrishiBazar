@@ -25,30 +25,26 @@ const LoginPage = () => {
   }
   return (
     <>
-      <div>
+      <div className="authForm">
         <form onSubmit={handleSubmit}>
           <div>
-            <h3>Welcome Back</h3>
-            <h5>Please Enter your Details</h5>
+            <h3 className="text-5xl text-center text-green-800">Welcome Back</h3>
+            <h5 className="text-xl text-center">Please Enter your Details</h5>
           </div>
           <div>
             <label htmlFor="">Email Address</label>
             <input type="email" placeholder="Enter your e-mail" value={email} onChange={(e)=>setEmail(e.target.value)}/>
           </div>
           <div>
+          <div className="flex justify-between">
             <label htmlFor="">Password</label>
+            <a href="#" style={{color: "var(--green-dark)"}}>Forgot password?</a>
+          </div>
             <input type="password" name="" id="" placeholder="Enter  your password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
           </div>
-          <div>
-            <div>
-              <input type="checkbox" name="" id="" />
-              <label htmlFor="">Remember me</label>
-            </div>
-            <a href="#">Forgot your password?</a>
-          </div>
-          <div>
+          <div className="flex flex-col gap-3">
             <button type="submit">Sign In</button>
-            <p>Don't have  an  account? <Link to="/register">Create an account</Link></p>
+            <p className="text-center">Don't have  an  account? <Link to="/register">Create an account</Link></p>
           </div>
         </form>
       </div>

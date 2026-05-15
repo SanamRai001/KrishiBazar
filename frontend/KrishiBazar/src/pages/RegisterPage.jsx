@@ -23,19 +23,19 @@ const RegisterPage = () => {
   }
   return (
     <>
-      <div>
+      <div className="authForm">
         <form onSubmit={handleSubmit}>
           <div>
-            <h3>Create account</h3>
-            <h5>Join Krishi Bazar today</h5>
+            <h1 className="text-5xl text-center text-green-800">Create account</h1>
+            <h3 className="text-xl text-center">Join Krishi Bazar today</h3>
           </div>
-          <div>
+          <div className="flex flex-col gap-3">
             <h5>I want to Join as:</h5>
             <div>
               <button type="button" onClick={()=>setRole("User")} style={{
                 background: role === "User" ? "#1a6b3a" : "transparent",
                 color: role === "User" ? "#fff" : "#1a6b3a"
-              }}>Buyer</button>
+              }} >Buyer</button>
               <button type="button" onClick={()=>setRole("Kishan")} style={{
                 background: role === "Kishan" ? "#1a6b3a" : "transparent",
                 color: role === "Kishan" ? "#fff" : "#1a6b3a"
@@ -54,9 +54,9 @@ const RegisterPage = () => {
             <label htmlFor="">Password</label>
             <input type="password" name="" id="" placeholder="*********" value={password} onChange={(e) =>setPassword(e.target.value)}/>
           </div>
-          <div>
+          <div className="flex flex-col gap-3">
             <button type="submit">Create Account</button>
-            <p>Already have an account? <Link to="/login">Sign In</Link></p>
+            <p className="text-center">Already have an account? <Link to="/login">Sign In</Link></p>
           </div>
         </form>
       </div>
