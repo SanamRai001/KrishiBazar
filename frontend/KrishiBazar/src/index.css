@@ -157,3 +157,49 @@ h2, h3, h4, h5, h6 {
   padding: 1rem 2rem;
   border-radius: 12px;
 }
+
+.productList{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 1rem 2rem;
+  gap: 1rem;
+}
+.productCard{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.productCard img{
+  border-radius: 12px 12px 0 0;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+.productCardContent{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+.productCardContent button{
+  margin-top: auto;
+}
+.category{
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;  
+}
+.category  button{
+  background-color: var(--border);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+}
+.filters{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+}

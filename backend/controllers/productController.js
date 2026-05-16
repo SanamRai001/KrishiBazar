@@ -16,7 +16,7 @@ export const  getAllProducts = async (req, res) =>{
         .limit(limit);
         if(!products){
             return res.json({
-                success: true,
+                success: false,
                 message: "Products are not Available"
             })
         }

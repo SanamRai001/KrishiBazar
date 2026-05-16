@@ -1,6 +1,32 @@
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import ProductCard from "../components/ProductCard"
+import { CATEGORIES, SORT_OPTIONS } from "../utils/constants"
+import { useEffect, useState } from "react"
+import axiosInstance from "../api/axiosInstance"
+
 const HomePage = () => {
+  const [category, setCategory] = useState("All");
+  const [products,  setProducts] = useState([]);
+  const [sortOption, setSortOption] = useState("");
+  useEffect(()=>{
+    const fetchData = async () =>{
+      try{
+        const response = await  axiosInstance.get("/products");
+        console.log(response.data)
+         if(response.data.data){
+          setProducts(response.data.data);
+         }
+         else{
+          console.log("NO items to  show");
+         }
+      }
+      catch(error){
+        console.error("Error  while fetching Products list: ", error.message);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <Navbar></Navbar>
@@ -19,17 +45,23 @@ const HomePage = () => {
         </div>
       </div>
       <div className="productSection">
-        <div>
-          <div>
-            categories
+        <div className="filters">
+          <div className="category">
+            {CATEGORIES.map((category) => (
+              <button key={category} onClick={()=>setCategory(category)}>{category}</button>
+            ))}
           </div>
           <div>
-            Filters
+            
           </div>
         </div>
         <div>
-          <div>
-            Products
+          <div className="productList">
+            {
+              products.map((product)=>(
+                <ProductCard name={product.name} category={product.category} image={product.image} price={product.price} seller={product.seller}></ProductCard>
+              ))
+            }
           </div>
           <div>
             Pagination
