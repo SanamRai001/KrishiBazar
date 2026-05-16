@@ -26,6 +26,7 @@ const RegisterPage = () => {
       <div className="authForm">
         <form onSubmit={handleSubmit}>
           <div>
+            <img src="/kishanLogo.png" alt="Kishan Logo" style={{height: "80px", margin: "0 auto", display: "block"}}/>
             <h1 className="text-5xl text-center text-green-800">Create account</h1>
             <h3 className="text-xl text-center">Join Krishi Bazar today</h3>
           </div>

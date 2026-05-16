@@ -28,6 +28,7 @@ const LoginPage = () => {
       <div className="authForm">
         <form onSubmit={handleSubmit}>
           <div>
+            <img src="/kishanLogo.png" alt="Kishan Logo" style={{height: "80px", margin: "0 auto", display: "block"}}/>
             <h3 className="text-5xl text-center text-green-800">Welcome Back</h3>
             <h5 className="text-xl text-center">Please Enter your Details</h5>
           </div>
