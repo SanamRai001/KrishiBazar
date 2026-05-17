@@ -24,7 +24,7 @@ export const CartProvider = ({children}) =>{
     }
     const addToCart = async (product, quantity) =>{
         try{
-            const response = await axiosInstance.post("/cart", {product, quantity});
+            const response = await axiosInstance.post("/cart", {productId: product, quantity});
             if(response.data.success){
                 fetchCart();
             }

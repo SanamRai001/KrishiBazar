@@ -9,7 +9,13 @@ const HomePage = () => {
   const [category, setCategory] = useState("All");
   const [products,  setProducts] = useState([]);
   const [sortOption, setSortOption] = useState("");
-
+  const [pagination,  setPagination] = useState({ totalPages: 0, total: 0, pageNumber: 1 });
+  //current page  logic left
+  const [currentPage, setCurrentPage] = useState(0);
+  const pages = [];
+  for(let i = 0; i< pagination?.totalPages; i++){
+    pages.push(<button key={i}>{i+1}</button>)
+  }
   useEffect(()=>{
     const fetchData = async () =>{
       try{
@@ -24,6 +30,7 @@ const HomePage = () => {
         console.log(response.data)
          if(response.data.data){
           setProducts(response.data.data);
+          setPagination(response.data.pagination);
          }
          else{
           console.log("NO items to  show");
@@ -76,7 +83,9 @@ const HomePage = () => {
             }
           </div>
           <div>
-            Pagination
+            {
+              pages
+            }
           </div>
         </div>
       </div>

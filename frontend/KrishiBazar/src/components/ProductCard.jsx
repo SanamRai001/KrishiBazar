@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom"
 import { useCart } from "../hooks/useCart"
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 const ProductCard = ({product}) => {
   const {name, price, image, category, seller, _id} = product;
   const {addToCart} = useCart();
+  const { signedIn } = useAuth();
+  const navigate = useNavigate();
   return (
     <>
     <Link to={`/product/${_id}`}>
@@ -23,7 +27,12 @@ const ProductCard = ({product}) => {
             <p>Rs.{price}</p>
             <button type="button" onClick={(e)=>{
               e.preventDefault();
-              addToCart(_id, 1);
+              if(signedIn){
+                addToCart(_id, 1);
+              }
+              else{
+                navigate("/login");
+              }
             }}>
               {/* cartIcon */}
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
