@@ -203,3 +203,14 @@ h2, h3, h4, h5, h6 {
   padding: 0.3rem  2rem;
   align-items: center;
 }
+.pagination{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.page{
+  border-radius: 8px;
+  background-color: var(--border);
+  padding: 0.3rem 1rem;
+}

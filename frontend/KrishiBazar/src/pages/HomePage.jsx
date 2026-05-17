@@ -14,7 +14,13 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const pages = [];
   for(let i = 0; i< pagination?.totalPages; i++){
-    pages.push(<button key={i}>{i+1}</button>)
+    pages.push(<button key={i} className="page" onClick={()=>{
+      setCurrentPage(i+1);
+      document.getElementById("productSection").scrollIntoView({
+        behavior: "smooth"
+      })
+    }
+    } >{i+1}</button>)
   }
   useEffect(()=>{
     const fetchData = async () =>{
@@ -23,7 +29,8 @@ const HomePage = () => {
           {
             params:{
               category: category === "All" ? "" : category,
-              sort: sortOption
+              sort: sortOption,
+              pageNumber: currentPage
             }
           }
         );
@@ -41,7 +48,7 @@ const HomePage = () => {
       }
     }
     fetchData();
-  }, [sortOption, category]);
+  }, [sortOption, category, currentPage]);
   return (
     <>
       <Navbar></Navbar>
@@ -59,7 +66,7 @@ const HomePage = () => {
           <img src="./hero.avif" alt="Vegeltables image"  width="700px" height="auto" className="rounded-xl"/>
         </div>
       </div>
-      <div className="productSection">
+      <div className="productSection" id="productSection">
         <div className="filters">
           <div className="category">
             {CATEGORIES.map((category) => (
@@ -82,10 +89,8 @@ const HomePage = () => {
               ))
             }
           </div>
-          <div>
-            {
-              pages
-            }
+          <div className="pagination">
+            {pages}
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ export const  getAllProducts = async (req, res) =>{
     const limit = parseInt(req.query.limit) || 10;
     const skip = (pageNumber - 1) * limit;
     const filter = {};
-    const sortOption = { createdAt: -1 };
+    let sortOption = { createdAt: -1 };
     if(sort === "price_asc") sortOption = { price: 1 }
     if(sort === "price_desc") sortOption = { price: -1 }
     if(name) filter.name = { $regex:name, $options: "i" }
