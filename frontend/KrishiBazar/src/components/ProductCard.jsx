@@ -1,7 +1,11 @@
-
-const ProductCard = ({name, price, image, category, seller}) => {
+import { Link } from "react-router-dom"
+import { useCart } from "../hooks/useCart"
+const ProductCard = ({product}) => {
+  const {name, price, image, category, seller, _id} = product;
+  const {addToCart} = useCart();
   return (
     <>
+    <Link to={`/product/${_id}`}>
       <div className="productCard">
         <img src={image} alt={name} className="rounded-2xl"/>
         <div className="productCardContent">
@@ -13,19 +17,25 @@ const ProductCard = ({name, price, image, category, seller}) => {
           </div>
           <div>
             <p>{name}</p>
-            <p>{seller}</p>
+            <p>{seller.name}</p>
           </div>
           <div className="flex flex-row justify-between">
             <p>Rs.{price}</p>
-            <button type="button">{/* cartIcon */}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1" fill="currentColor" />
-          <circle cx="20" cy="21" r="1" fill="currentColor" />
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-        </svg></button>
+            <button type="button" onClick={(e)=>{
+              e.preventDefault();
+              addToCart(_id, 1);
+            }}>
+              {/* cartIcon */}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1" fill="currentColor" />
+                <circle cx="20" cy="21" r="1" fill="currentColor" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
+    </Link>
     </>
   )
 }

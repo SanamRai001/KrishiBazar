@@ -1,20 +1,25 @@
 import Product from '../models/Product.js'
 
 export const  getAllProducts = async (req, res) =>{
-    const {name, category, seller} = req.query;
+    const {name, category, seller, sort} = req.query;
     const pageNumber = parseInt(req.query.pageNumber) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (pageNumber - 1) * limit;
     const filter = {};
-    if(name) filter.name = name;
-    if(category) filter.category = category;
-    if(seller) filter.seller = seller;
+    const sortOption = { createdAt: -1 };
+    if(sort === "price_asc") sortOption = { price: 1 }
+    if(sort === "price_desc") sortOption = { price: -1 }
+    if(name) filter.name = { $regex:name, $options: "i" }
+    if(category) filter.category = category
+    if(seller) filter.seller = seller
     try{
         const products = await Product.find(filter)
-        .sort({createdAt: -1})
+        .populate("seller", "name")
+        .sort(sortOption)
         .skip(skip)
         .limit(limit);
-        if(!products){
+        const  total = await Product.countDocuments(filter);
+        if(!products || products.length === 0){
             return res.json({
                 success: false,
                 message: "Products are not Available"
@@ -23,7 +28,12 @@ export const  getAllProducts = async (req, res) =>{
         res.json({
             success: true,
             message: "Product Fetched Successfully",
-            data: products
+            data: products,
+            pagination: {
+                total,
+                pageNumber,
+                totalPages: Math.ceil(total  / limit)
+            }
         });
     }
     catch(err){
