@@ -214,3 +214,29 @@ h2, h3, h4, h5, h6 {
   background-color: var(--border);
   padding: 0.3rem 1rem;
 }
+.productPage{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 2rem;
+}
+.productPage div{
+  margin-top: 1rem;
+}
+
+
+.quantity {
+  padding: 0.2rem 1rem;
+  border-radius: 12px;
+}
+.productButtons{
+  padding: 2rem 0rem;
+}
+.productButtons button{
+  padding: 0.5rem 3rem;
+  border-radius: 12px;
+  color: var(--border);
+}
+.productButtons input{
+  background-color: white;
+}
