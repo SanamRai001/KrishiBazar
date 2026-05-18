@@ -5,14 +5,15 @@ import axiosInstance from "../api/axiosInstance";
 export const CartContext =  createContext();
 export const CartProvider = ({children}) =>{
     const [cart, setCart] = useState([]);
-    const itemCount = cart.length;
-
+const itemCount = Array.isArray(cart) ? cart.length : 0
 
     const fetchCart = async () =>{
         try{
             const response = await axiosInstance.get("/cart");
+            console.log("cart data:", response.data.data)
+console.log("cart items:", response.data.data.items)
             if(response.data.success){
-                setCart(response.data.data);
+                setCart(response.data.data.items);
             }
             else{
                 console.log(response.data.message);
@@ -50,7 +51,7 @@ export const CartProvider = ({children}) =>{
             console.error("Error while removing  an  item",  err.message);
         }
     }
-    const updateCart = async (product, quantity) =>{
+    const updateQuantity = async (product, quantity) =>{
         try{
             const response = await axiosInstance.put(`/cart/${product}`, {quantity});
             if(response.data.success){
@@ -67,8 +68,9 @@ export const CartProvider = ({children}) =>{
     const clearCart = () =>{
         setCart([]);
     }
+    
     return (
-        <CartContext.Provider value={{cart, itemCount, fetchCart, addToCart, removeFromCart, updateCart,  clearCart}}>
+        <CartContext.Provider value={{cart, itemCount, fetchCart, addToCart, removeFromCart, updateQuantity,  clearCart}}>
             {children}
         </CartContext.Provider>
     )
