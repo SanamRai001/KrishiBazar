@@ -1,5 +1,3 @@
-import Navbar from "../components/Navbar"
-import Footer from "../components/Footer"
 import ProductCard from "../components/ProductCard"
 import { CATEGORIES, SORT_OPTIONS } from "../utils/constants"
 import { useEffect, useState } from "react"
@@ -75,7 +73,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="heroSection">
         <div className="flex flex-col gap-4">
           <h1 className="text-5xl font-bold">
@@ -172,7 +169,6 @@ const HomePage = () => {
         </div>
       </div>
 
-      <Footer />
     </>
   )
 }
