@@ -50,7 +50,7 @@ export const CartProvider = ({children}) =>{
             console.error("Error while removing  an  item",  err.message);
         }
     }
-    const updateQuantity = async (product, quantity) =>{
+    const updateCart = async (product, quantity) =>{
         try{
             const response = await axiosInstance.put(`/cart/${product}`, {quantity});
             if(response.data.success){
@@ -68,7 +68,7 @@ export const CartProvider = ({children}) =>{
         setCart([]);
     }
     return (
-        <CartContext.Provider value={{cart, itemCount, fetchCart, addToCart, removeFromCart, updateQuantity,  clearCart}}>
+        <CartContext.Provider value={{cart, itemCount, fetchCart, addToCart, removeFromCart, updateCart,  clearCart}}>
             {children}
         </CartContext.Provider>
     )
