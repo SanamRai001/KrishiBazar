@@ -214,29 +214,155 @@ h2, h3, h4, h5, h6 {
   background-color: var(--border);
   padding: 0.3rem 1rem;
 }
-.productPage{
+.productPage {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 1rem 2rem;
-}
-.productPage div{
-  margin-top: 1rem;
+  padding: 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+.productBreadcrumb {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.productMainContent {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.productImageSection {
+  flex-shrink: 0;
+}
+
+.productInfoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.productTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.productName {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  color: var(--text-primary);
+}
+
+.productPriceRow {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.productPrice {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--green-dark);
+}
+
+.productStock {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  background-color: #e8f5ed;
+  color: var(--green-dark);
+}
+
+.productDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.productDescription h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.productDescription p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.productPageCategory {
+  display: inline-flex;
+  justify-content: center;
+  padding: 0.3rem 1rem;
+  border-radius: 9999px;
+  width: auto;
+  color: white;
+}
+
+.productPageCalculation {
+  background-color: #F1F5ED;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.productPageCalculation p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
 
 .quantity {
   padding: 0.2rem 1rem;
   border-radius: 12px;
 }
-.productButtons{
-  padding: 2rem 0rem;
+
+.productButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0.5rem 0;
 }
-.productButtons button{
-  padding: 0.5rem 3rem;
+
+.productButtons button {
+  flex: 1;
+  padding: 0.8rem 2rem;
   border-radius: 12px;
-  color: var(--border);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
 }
-.productButtons input{
+
+.productButtons button:hover {
+  opacity: 0.9;
+}
+
+.productButtons input {
   background-color: white;
+}
+
+.similarItems {
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.similarItems p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
