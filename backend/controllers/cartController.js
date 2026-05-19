@@ -70,7 +70,7 @@ export const addCart = async (req, res) => {
     }
 };
 export const updateCart = async (req, res) => {
-    const productId = req.params.id;
+    const itemId = req.params.id;
     const user = req.user.id;
     const {quantity} = req.body;
     try{
@@ -87,7 +87,7 @@ export const updateCart = async (req, res) => {
                 })
             }
             if(quantity === 0){
-                const newItems = userCart.items.filter((i)=>i.product.toString() !== productId.toString());
+                const newItems = userCart.items.filter((i)=>i._id.toString() !== itemId.toString());
                 userCart.items = newItems;
                 await userCart.save();
                 return res.json({
@@ -119,12 +119,12 @@ export const updateCart = async (req, res) => {
     }
 };
 export const deleteCart = async (req, res) => {
-    const productId = req.params.id;
+    const itemId = req.params.id;
     const user = req.user.id;
     try{
         const userCart = await Cart.findOne({user: user});
         if(userCart){
-           const newItems = userCart.items.filter((i)=>i.product.toString() !== productId.toString());
+           const newItems = userCart.items.filter((i)=>i._id.toString() !== itemId.toString());
             userCart.items = newItems;
             await userCart.save();
             return res.json({

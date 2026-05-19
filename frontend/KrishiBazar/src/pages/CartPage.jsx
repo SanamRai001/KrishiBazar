@@ -17,28 +17,30 @@ const CartPage = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <h1>Your Shopping Cart</h1>
-      <div>
-        {cartItems.length === 0
-          ? <p>Your cart is empty</p>
-          : cartItems.map((item) => (
-              <CartItem key={item._id} cart={item} />
-            ))
-        }
-      </div>
-      {cartItems.length > 0 && (
+      <div className="shoppingCart">
         <div>
-          <p>Total: <strong>Rs. {totalPrice}</strong></p>
-          <button type="button" onClick={() => navigate("/checkout")}>
-            Proceed to Checkout
-          </button>
-          <button type="button" onClick={clearCart}>
-            Clear Cart
-          </button>
+          {cartItems.length === 0
+            ? <p>Your cart is empty</p>
+            : cartItems.map((item) => (
+                <CartItem key={item._id} cart={item} style={{height:"200px"}}/>
+              ))
+          }
         </div>
-      )}
-    </div>
+        {cartItems.length > 0 && (
+          <div>
+            <p>Total: <strong>Rs. {totalPrice}</strong></p>
+            <button type="button" onClick={() => navigate("/checkout")}>
+              Proceed to Checkout
+            </button>
+            <button type="button" onClick={clearCart}>
+              Clear Cart
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   )
 }
 
