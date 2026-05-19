@@ -77,11 +77,11 @@ export const updateCart = async (req, res) => {
         const userCart = await Cart.findOne({user: user});
         if(userCart){
             const search = userCart.items.find((i)=>{
-                return productId.toString() == i.product.toString();
+                return i._id.toString() == itemId.toString();
             });
             if(!search){
                 return  res.json({
-                    success: true,
+                    success: false,
                     message: "No such Product is found to update in cart.",
                     data: userCart
                 })

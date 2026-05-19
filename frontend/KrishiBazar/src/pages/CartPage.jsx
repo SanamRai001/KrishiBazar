@@ -18,28 +18,43 @@ const CartPage = () => {
 
   return (
     <>
-      <h1>Your Shopping Cart</h1>
-      <div className="shoppingCart">
-        <div>
-          {cartItems.length === 0
-            ? <p>Your cart is empty</p>
-            : cartItems.map((item) => (
-                <CartItem key={item._id} cart={item} style={{height:"200px"}}/>
-              ))
-          }
+    <div className="cartPage">
+      <h1 className="text-4xl text-green-600 font-semibold">Your Shopping Cart</h1>
+      <div className="cart">
+        <div className="shoppingCart">
+          <div className="cartItemList">
+            {cartItems.length === 0
+              ? <p>Your cart is empty</p>
+              : cartItems.map((item) => (
+                  <CartItem key={item._id} cart={item} style={{height:"200px"}}/>
+                ))
+            }
+          </div>
         </div>
         {cartItems.length > 0 && (
-          <div>
-            <p>Total: <strong>Rs. {totalPrice}</strong></p>
-            <button type="button" onClick={() => navigate("/checkout")}>
-              Proceed to Checkout
-            </button>
-            <button type="button" onClick={clearCart}>
-              Clear Cart
-            </button>
+          <div className="orderSummary">
+            <h1 className="text-2xl font-bold">Order Summary</h1>
+            <div className="flex justify-between">
+              <p>Subtotal</p>
+              <p>{totalPrice}</p>
+            </div>
+            <div className="flex justify-between">
+              <p>Delivery  fee</p>
+              <p>Free</p>
+            </div>
+            <div className="flex justify-between">
+              <p>Total</p>
+              <p>{totalPrice}</p>
+            </div>
+            <button type="button" onClick={()=>navigate("/checkout")} className="bg-green-900 text-white ">Proceed to  Checkout</button>
+            <button type="button" onClick={()=>navigate("/")} className="bg-white text-green-900">Continue Shopping</button>
+            <button type="button" onClick={clearCart} className="bg-red-600 text-white">
+                  Clear Cart
+                </button>
           </div>
         )}
       </div>
+    </div>
     </>
   )
 }
