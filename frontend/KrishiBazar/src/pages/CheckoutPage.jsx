@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useLocation } from "react-router-dom";
+import  {useCart} from '../hooks/useCart'
 
 const CheckoutPage = () => {
   const locationData = {
@@ -13,7 +15,10 @@ const CheckoutPage = () => {
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const districts = province ? locationData[province] : [];
-  const [items, setItems] = useState();
+  const {cart} = useCart();
+  const location = useLocation();
+  const cartData = location.state;
+  const items = cartData?.buyNow ? cartData.orderItems : cart;
   return (
     <>
       <div>
@@ -57,7 +62,15 @@ const CheckoutPage = () => {
       </div>
       <div>
         <h1>Order Summary</h1>
-        
+        {
+          items.map((item) =>(
+            <div>
+              <img src={item.image} alt={item.name} />
+              <p>{item.quantity}</p>
+              <p>{item.price}</p>
+            </div>
+          ))
+        }
       </div>
     </>
   )
