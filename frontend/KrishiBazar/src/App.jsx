@@ -9,13 +9,18 @@ import RegisterPage from './pages/RegisterPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navbar from './components/Navbar'
 import  Footer from  './components/Footer'
-const Layout = () => (
-    <>
+const Layout = () =>(
+  <>
+    <div className='layout'>
       <Navbar></Navbar>
-      <Outlet></Outlet>
+      <main className='mainContent'>
+        <Outlet></Outlet>
+      </main>
       <Footer></Footer>
-    </>
-  )
+    </div>
+  </>
+)
+
 const App = () => {
   return (
     <>

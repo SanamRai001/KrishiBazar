@@ -13,7 +13,11 @@ const orderSchema = new mongoose.Schema(
             }
         ],
         totalPrice: {type: Number, required: true},
-        shippingAddress: {type: String, required: true}
+        shippingAddress: {
+        province: { type: String, required: true },
+        district: { type: String, required: true },
+        address:  { type: String, required: true }
+        }    
     }
 )
 const Order  = mongoose.model("Order", orderSchema);

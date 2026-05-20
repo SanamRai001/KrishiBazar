@@ -64,7 +64,7 @@ const CheckoutPage = () => {
   return (
     <>
       <div className="checkOutPage">
-        <div>
+        <div className="deliverySection">
           <h1>Delivery Address</h1>
           <form onSubmit={(e)=>{
             e.preventDefault()
@@ -95,24 +95,29 @@ const CheckoutPage = () => {
             <input type="text" value={address} onChange={(e)=>setAddress(e.target.value)} placeholder="Kathmandu" />
           </form>
         </div>
-        <div>
+        <div className="paymentSection">
           <h1>Payment Method</h1>
           <p>Cash  on Delivery</p>
           <p>Esewa</p>
         </div>
-        <div>
+        <div className="orderSection">
           <h1>Order Summary</h1>
-          <div>
+          <div className="flex  gap-4 flex-col orderList">
             {
               items.map((item) =>{
                 const image = cartData?.buyNow ? item.image : item.product.image;
                 const price = cartData?.buyNow ? item.price : item.product.price;
                 const name = cartData?.buyNow ? item.name : item.product.name;
                 return(
-                <div key={item.product}>
-                  <img src={image} alt={name} />
-                  <p>{item.quantity} X {price}</p>
-                  <p>{price * item.quantity}</p>
+                <div key={item.product} className="orderItems">
+                  <div className="flex gap-4">
+                  <img src={image} alt={name} className="w-20 h-20 object-contain rounded"/>
+                  <div>
+                    <p>{name}</p>
+                    <p >{item.quantity} X {price}</p>
+                  </div>
+                  </div>
+                  <p className="font-bold">Rs. {price * item.quantity}</p>
                 </div>
                 )
               }
@@ -120,19 +125,19 @@ const CheckoutPage = () => {
               )
             }
           </div>
-          <div>
+          <div className="flex justify-between">
             <p>Subtotal</p>
             <p>{totalPrice}</p>
           </div>
-          <div>
+          <div className="flex justify-between ">
             <p>Delivery Fee</p>
             <p>Free</p>
           </div>
-          <div>
+          <div className="flex justify-between">
             <p>Total</p>
             <p>{totalPrice}</p>
           </div>
-          <button type="button" onClick={handleOrderSubmit}>Place Order (Rs. {totalPrice})</button>
+          <button type="button" onClick={handleOrderSubmit} >Place Order (Rs. {totalPrice})</button>
         </div>
       </div>
     </>
