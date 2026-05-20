@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import  {useCart} from '../hooks/useCart'
 import axiosInstance from "../api/axiosInstance";
@@ -17,7 +17,7 @@ const CheckoutPage = () => {
   const [district, setDistrict] = useState("");
   const  [address,  setAddress] = useState("");
   const districts = province ? locationData[province] : [];
-  const {cart, clearCart} = useCart();
+  const {cart, clearCart, fetchCart} = useCart();
   const location = useLocation();
   const cartData = location.state;
   const items = cartData?.buyNow ? cartData.orderItems : cart;
@@ -61,6 +61,11 @@ const CheckoutPage = () => {
     }
     
   }
+  useEffect(()=>{
+    if(!cartData?.buyNow){
+      fetchCart()
+    }
+  },[]);
   return (
     <>
       <div className="checkOutPage">

@@ -508,7 +508,7 @@ h2, h3, h4, h5, h6 {
 }
 .orderList{
   border-bottom: 1px solid var(--border);
-    padding-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 .deliverySection h1,
 .paymentSection h1,
