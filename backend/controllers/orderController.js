@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 
 export const addOrder = async (req, res)=>{
     const user = req.user.id;
-    const {shippingAddress, orderItems, quantity, buyNow} = req.body;
+    const {shippingAddress, orderItems, buyNow} = req.body;
     try{
         let finalItems = [];
         let  cart = null;

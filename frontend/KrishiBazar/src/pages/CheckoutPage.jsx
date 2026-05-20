@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import  {useCart} from '../hooks/useCart'
+import axiosInstance from "../api/axiosInstance";
 
 const CheckoutPage = () => {
   const locationData = {
@@ -14,21 +15,61 @@ const CheckoutPage = () => {
   }
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
+  const  [address,  setAddress] = useState("");
   const districts = province ? locationData[province] : [];
-  const {cart} = useCart();
+  const {cart, clearCart} = useCart();
   const location = useLocation();
   const cartData = location.state;
   const items = cartData?.buyNow ? cartData.orderItems : cart;
+  const totalPrice = items.reduce((sum, item) => {
+    const price = cartData?.buyNow ? item.price : item.product.price
+    return sum + (price * item.quantity)
+  }, 0);
+  const shippingAddress = {province: province, district: district, address: address};
+  console.log(items);
+  const navigate = useNavigate();
+  const handleOrderSubmit = async () =>{
+     if(!province || !district || !address){
+    console.log("Please fill all fields")
+    return
+     }
+    const orderData = {
+      orderItems: cartData?.buyNow 
+      ? items
+      :items.map((item)=> ({
+        product: item.product._id,
+        quantity: item.quantity
+      })),
+      shippingAddress: shippingAddress,
+      buyNow : cartData?.buyNow ? true : false
+    }
+    try{
+      const response = await axiosInstance.post("/order", orderData);
+      if(response.data.success){
+        console.log("Orderplaced successfully");
+        if(!cartData?.buyNow){
+          clearCart()
+        }
+        navigate("/");
+      }
+      else{
+        console.log("Order placing failed");
+      }
+    }
+    catch(err){
+      console.error("Error while placing Order: ", err.message);
+    }
+    
+  }
   return (
     <>
-      <div>
-        <h1>Delivery Address</h1>
+      <div className="checkOutPage">
         <div>
-          <form action="">
-            <label htmlFor="">Fullname</label>
-            <input type="text" placeholder="John Doe" />
-            <label htmlFor="">Phone  Number</label>
-            <input type="text" placeholder="98XXXXXXXX" />
+          <h1>Delivery Address</h1>
+          <form onSubmit={(e)=>{
+            e.preventDefault()
+            handleOrderSubmit()
+          }}>
             <label htmlFor="">Province</label>
             <select value={province} onChange={(e)=>{
               setProvince(e.target.value)
@@ -51,26 +92,48 @@ const CheckoutPage = () => {
               }
             </select>
             <label htmlFor="">Address</label>
-            <input type="text" placeholder="Kathmandu" />
+            <input type="text" value={address} onChange={(e)=>setAddress(e.target.value)} placeholder="Kathmandu" />
           </form>
         </div>
-      </div>
-      <div>
-        <h1>Payment Method</h1>
-        <p>Cash  on Delivery</p>
-        <p>Esewa</p>
-      </div>
-      <div>
-        <h1>Order Summary</h1>
-        {
-          items.map((item) =>(
-            <div>
-              <img src={item.image} alt={item.name} />
-              <p>{item.quantity}</p>
-              <p>{item.price}</p>
-            </div>
-          ))
-        }
+        <div>
+          <h1>Payment Method</h1>
+          <p>Cash  on Delivery</p>
+          <p>Esewa</p>
+        </div>
+        <div>
+          <h1>Order Summary</h1>
+          <div>
+            {
+              items.map((item) =>{
+                const image = cartData?.buyNow ? item.image : item.product.image;
+                const price = cartData?.buyNow ? item.price : item.product.price;
+                const name = cartData?.buyNow ? item.name : item.product.name;
+                return(
+                <div key={item.product}>
+                  <img src={image} alt={name} />
+                  <p>{item.quantity} X {price}</p>
+                  <p>{price * item.quantity}</p>
+                </div>
+                )
+              }
+                
+              )
+            }
+          </div>
+          <div>
+            <p>Subtotal</p>
+            <p>{totalPrice}</p>
+          </div>
+          <div>
+            <p>Delivery Fee</p>
+            <p>Free</p>
+          </div>
+          <div>
+            <p>Total</p>
+            <p>{totalPrice}</p>
+          </div>
+          <button type="button" onClick={handleOrderSubmit}>Place Order (Rs. {totalPrice})</button>
+        </div>
       </div>
     </>
   )
