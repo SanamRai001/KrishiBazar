@@ -519,3 +519,15 @@ h2, h3, h4, h5, h6 {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
 }
+
+                                          /* NotFoundPage */
+.notFoundPage{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.notFoundPage h1{
+  font-size: xx-large;
+}
