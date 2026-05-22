@@ -10,6 +10,8 @@ import NotFoundPage from './pages/NotFoundPage'
 import Navbar from './components/Navbar'
 import  Footer from  './components/Footer'
 import DashboardPage from './pages/DashboardPage'
+import Notification from './components/Notification'
+
 const Layout = () =>(
   <>
     <div className='layout'>
@@ -26,6 +28,7 @@ const App = () => {
   return (
     <>
       <Router>
+        <Notification></Notification>
         <Routes>
           <Route element={<Layout></Layout>}>
             <Route element={<PrivateRoute></PrivateRoute>}>
