@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useCart } from '../hooks/useCart'
 import CartItem from "../components/CartItem"
-
+import { Link } from "react-router-dom"
 const CartPage = () => {
   const { cart, fetchCart, clearCart } = useCart()
   const navigate = useNavigate()
@@ -24,7 +24,13 @@ const CartPage = () => {
         <div className="shoppingCart">
           <div className="cartItemList">
             {cartItems.length === 0
-              ? <p>Your cart is empty</p>
+              ? 
+              <div className="cartIsEmpty">
+                <img src="/cartIsEmpty.png" alt="cartIsEmpty Image" />
+                <h1>Your shopping Cart is empty</h1>
+                <p>Looks like you have not added anything to the cart yet</p>
+                <Link to="/" className="backToHome">Go Back to Products</Link>
+              </div>
               : cartItems.map((item) => (
                   <CartItem key={item._id} cart={item} style={{height:"200px"}}/>
                 ))

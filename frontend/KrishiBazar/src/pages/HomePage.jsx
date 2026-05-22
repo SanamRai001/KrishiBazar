@@ -159,7 +159,13 @@ const HomePage = () => {
 
         <div>
           <div className="productList">
-            {products.map((product) => (
+            {products.length === 0 ? 
+            <div className="itemsNotFound">
+              <img src="/itemsNotFound.png" alt="" />
+              <h1>Items Not found</h1>
+              <p>We could not Found any items matching your Search</p>
+            </div> 
+            : products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
