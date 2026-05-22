@@ -2,15 +2,17 @@ import { createContext, useState } from "react"
 
 export const NotificationContext = createContext();
 
-const NotificationProvider = ({children}) => {
+export const NotificationProvider = ({children}) => {
     const [message, setMessage] = useState("");
     const [type, setType] = useState("");
     const [visible, setVisible] = useState(false);
     const notify = (message, type) => {
+        
         setMessage(message);
         setType(type);
         setVisible(true);
-        setInterval(()=>{
+        console.log("notify is called!");
+        setTimeout(()=>{
             setVisible(false);
         }, 3000);
     }
@@ -20,5 +22,3 @@ const NotificationProvider = ({children}) => {
     </NotificationContext.Provider>
     )
 }
-
-export default NotificationProvider

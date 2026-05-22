@@ -7,12 +7,12 @@ const Notification = () => {
 
     const styles =
       type === "pass"
-        ? "border-green-500 bg-green-50 text-green-700"
-        : "border-red-500 bg-red-50 text-red-700";
+        ? "border-green-500  text-green-700"
+        : "border-red-500  text-red-700";
 
     return (
         <div
-          className={`rounded-lg border shadow-md z-50 ${styles}`}
+          className={`rounded-lg border z-50 ${styles} notification`}
         >
             {message}
         </div>
