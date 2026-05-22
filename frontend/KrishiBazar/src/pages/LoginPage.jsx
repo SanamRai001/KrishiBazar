@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axiosInstance from "../api/axiosInstance";
 import { useAuth } from "../hooks/useAuth";
@@ -10,7 +10,12 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const {login} = useAuth();
   const {notify} = useNotification();
-
+  const {signedIn} = useAuth();
+  useEffect(()=>{
+    if(signedIn){
+      navigate("/");
+    }
+  },[signedIn]);
   const handleSubmit = async (e) =>{
     e.preventDefault();
     try{

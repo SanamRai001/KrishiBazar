@@ -380,6 +380,15 @@ h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: var(--text-primary);
 }
+.productCartCategory {
+  display: inline-flex;
+  justify-content: center;
+  padding: 0.1rem 0.6rem;
+  border-radius: 9999px;
+  width: auto;
+  font-size: small;
+  background-color: var(--border);
+}
 
                             /* shopping Cart */
 .cart{
