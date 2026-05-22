@@ -568,3 +568,12 @@ h2, h3, h4, h5, h6 {
   color: var(--text-secondary);
   max-width: 300px;
 }
+
+                                      /* Notification */
+.notification{
+  padding: 1rem 2rem;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}

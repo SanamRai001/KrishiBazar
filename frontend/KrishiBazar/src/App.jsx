@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage'
 import NotFoundPage from './pages/NotFoundPage'
 import Navbar from './components/Navbar'
 import  Footer from  './components/Footer'
+import DashboardPage from './pages/DashboardPage'
 const Layout = () =>(
   <>
     <div className='layout'>
@@ -30,6 +31,7 @@ const App = () => {
             <Route element={<PrivateRoute></PrivateRoute>}>
               <Route element={<CartPage></CartPage>} path='/cart'></Route>
               <Route element={<CheckoutPage></CheckoutPage>} path='/checkout'></Route>
+              <Route element={<DashboardPage></DashboardPage>} path='/dashboard'></Route>
             </Route>
             <Route element={<HomePage></HomePage>} path='/'></Route>
             <Route element={<ProductPage></ProductPage>} path='/product/:id'></Route>
