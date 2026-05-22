@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { useCart } from '../hooks/useCart'
 import CartItem from "../components/CartItem"
 import { Link } from "react-router-dom"
+import  {useNotification} from "../hooks/useNotification"
+
 const CartPage = () => {
   const { cart, fetchCart, clearCart } = useCart()
   const navigate = useNavigate()
   const cartItems = Array.isArray(cart) ? cart : []
-
+  const {notify} = useNotification();
   const totalPrice = cartItems.reduce((sum, item) => {
     return sum + (item.product.price * item.quantity)
   }, 0)
@@ -30,6 +32,7 @@ const CartPage = () => {
                 <h1>Your shopping Cart is empty</h1>
                 <p>Looks like you have not added anything to the cart yet</p>
                 <Link to="/" className="backToHome">Go Back to Products</Link>
+                {notify("Your shopping Cart  is empty!", "fail")}
               </div>
               : cartItems.map((item) => (
                   <CartItem key={item._id} cart={item} style={{height:"200px"}}/>

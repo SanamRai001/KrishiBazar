@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import  {useCart} from '../hooks/useCart'
 import axiosInstance from "../api/axiosInstance";
-
+import { useNotification } from "../hooks/useNotification";
 const CheckoutPage = () => {
   const locationData = {
   "Bagmati": ["Kathmandu", "Lalitpur", "Bhaktapur", "Kavrepalanchok", "Sindhupalchok"],
@@ -26,11 +26,12 @@ const CheckoutPage = () => {
     return sum + (price * item.quantity)
   }, 0);
   const shippingAddress = {province: province, district: district, address: address};
-  console.log(items);
+  const { notify } = useNotification();  
   const navigate = useNavigate();
   const handleOrderSubmit = async () =>{
      if(!province || !district || !address){
-    console.log("Please fill all fields")
+      notify("Please  fill  all  fields", "fail");
+      console.log("Please fill all fields")
     return
      }
     const orderData = {
@@ -46,17 +47,22 @@ const CheckoutPage = () => {
     try{
       const response = await axiosInstance.post("/order", orderData);
       if(response.data.success){
+        notify("Order placed successfully", "pass");
         console.log("Orderplaced successfully");
         if(!cartData?.buyNow){
           clearCart()
         }
-        navigate("/");
+      setTimeout(() => {
+          navigate("/")
+        }, 1500)      
       }
       else{
+        notify("Order Placing Failed! Please try again!", "fail")
         console.log("Order placing failed");
       }
     }
     catch(err){
+      notify("Backend Failure while placing order");
       console.error("Error while placing Order: ", err.message);
     }
     

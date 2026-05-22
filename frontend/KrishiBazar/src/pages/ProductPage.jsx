@@ -14,14 +14,7 @@ const ProductPage = () => {
   const { signedIn } = useAuth();
   const  navigate = useNavigate();
   const [similarItems,  setSimilarItems] = useState([]);
-  // add  buy now logic
-  // const handleBuyNow = async () =>{
-  //   const response = await axiosInstance.post("/order", 
-  //     {
-
-  //     }
-  //   )
-  // }
+  
  useEffect(() => {
   const fetchData = async () => {
     try {

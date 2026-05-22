@@ -3,7 +3,6 @@ import { CATEGORIES, SORT_OPTIONS } from "../utils/constants"
 import { useEffect, useState } from "react"
 import axiosInstance from "../api/axiosInstance"
 import { useSearchParams } from "react-router-dom"
-import { useNotification } from "../hooks/useNotification"
 
 const HomePage = () => {
   const [category, setCategory] = useState("All");
@@ -13,7 +12,6 @@ const HomePage = () => {
   const [searchParams] = useSearchParams();
   const [pagination, setPagination] = useState({ totalPages: 0, total: 0, pageNumber: 1 });
   const [currentPage, setCurrentPage] = useState(1);
-  const {notify} = useNotification();
 
   const pages = [];
   for(let i = 0; i < pagination?.totalPages; i++){
@@ -166,7 +164,6 @@ const HomePage = () => {
               <img src="/itemsNotFound.png" alt="" />
               <h1>Items Not found</h1>
               <p>We could not Found any items matching your Search</p>
-              {notify("No items  to show", "fail")}
             </div> 
             : products.map((product) => (
               <ProductCard key={product._id} product={product} />

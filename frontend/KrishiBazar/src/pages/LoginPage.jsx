@@ -2,12 +2,15 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axiosInstance from "../api/axiosInstance";
 import { useAuth } from "../hooks/useAuth";
+import {useNotification} from "../hooks/useNotification"
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const {login} = useAuth();
+  const {notify} = useNotification();
+
   const handleSubmit = async (e) =>{
     e.preventDefault();
     try{
@@ -16,10 +19,14 @@ const LoginPage = () => {
         const token = response.data.token;
         const user = response.data.user;
         login({user}, token);
-        navigate("/");
+        notify("User logged In successfully!");
+        setTimeout(() => {
+            navigate("/")
+          }, 1500)
       }
     }
     catch(err){
+      notify("Logging In failed!");
       console.error("Error while logging in.", err.message);
     }
   }

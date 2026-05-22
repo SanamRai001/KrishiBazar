@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useCallback, useState } from "react"
 
 export const NotificationContext = createContext();
 
@@ -6,7 +6,7 @@ export const NotificationProvider = ({children}) => {
     const [message, setMessage] = useState("");
     const [type, setType] = useState("");
     const [visible, setVisible] = useState(false);
-    const notify = (message, type) => {
+    const notify = useCallback((message, type) => {
         
         setMessage(message);
         setType(type);
@@ -15,7 +15,7 @@ export const NotificationProvider = ({children}) => {
         setTimeout(()=>{
             setVisible(false);
         }, 3000);
-    }
+    },[]);
   return (
     <NotificationContext.Provider value={{notify, message, type, visible}}>
         {children}

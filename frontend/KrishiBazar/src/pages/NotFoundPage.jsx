@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom"
+import {useNotification} from "../hooks/useNotification"
+
 const NotFoundPage = () => {
+  const {notify} = useNotification();
   return (
     <>
       <div className="notFoundPage">
+        {notify("404 page not Found!")}
         <img src="/notFound.png" alt="Page Not found Gif" height="400px" width="400px"/>
         <p>404 Not found</p>
         <h1>

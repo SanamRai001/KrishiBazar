@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axiosInstance from "../api/axiosInstance";
-
+import {useNotification} from "../hooks/useNotification"
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -9,15 +9,20 @@ const RegisterPage = () => {
   const  [password, setPassword] = useState("");
   const [role, setRole] = useState("User");
   const navigate = useNavigate();
+  const {notify} = useNotification();
   const  handleSubmit = async (e) =>{
     e.preventDefault();
     try{
       const response = await axiosInstance.post("/auth/register", {name, email, password, role});
       if(response.data.success){
-        navigate("/login");
+        notify("Registered successfully!")
+        setTimeout(() => {
+          navigate("/")
+        }, 1500);
       }
     }
     catch(err){
+      notify("Registration Failed!");
       console.error("Error while Sending Data: ", err.message);
     }
   }

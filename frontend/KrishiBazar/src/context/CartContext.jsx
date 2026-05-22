@@ -1,17 +1,16 @@
 import { createContext, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
-
+import {useNotification} from "../hooks/useNotification"
 
 export const CartContext =  createContext();
 export const CartProvider = ({children}) =>{
     const [cart, setCart] = useState([]);
-const itemCount = Array.isArray(cart) ? cart.length : 0
+    const itemCount = Array.isArray(cart) ? cart.length : 0
+    const {notify} =  useNotification();
 
     const fetchCart = async () =>{
         try{
             const response = await axiosInstance.get("/cart");
-            console.log("cart data:", response.data.data)
-console.log("cart items:", response.data.data.items)
             if(response.data.success){
                 setCart(response.data.data.items);
             }
@@ -27,10 +26,11 @@ console.log("cart items:", response.data.data.items)
         try{
             const response = await axiosInstance.post("/cart", {productId: product, quantity});
             if(response.data.success){
+                notify("Item added to  Cart", "pass");
                 fetchCart();
             }
             else{
-                console.log(response.data.message);
+                notify("Failed to add item", "fail");
             }
         }
         catch(err){
@@ -41,10 +41,11 @@ console.log("cart items:", response.data.data.items)
         try{
             const response = await axiosInstance.delete(`/cart/${product}`);
             if(response.data.success){
+                notify("Item removed", "pass");
                 fetchCart();
             }
             else{
-                console.log(response.data.message);
+                notify("Failed to remove", "fail");
             }
         }
         catch(err){
