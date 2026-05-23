@@ -5,6 +5,7 @@ import { Link} from "react-router-dom";
 import { useCart } from "../hooks/useCart"
 import  { useAuth } from "../hooks/useAuth"
 import ProductCard from "../components/ProductCard";
+import ProductCardSkeleton from "../components/skeleton/ProductCardSkeleton";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -14,15 +15,15 @@ const ProductPage = () => {
   const { signedIn } = useAuth();
   const  navigate = useNavigate();
   const [similarItems,  setSimilarItems] = useState([]);
-  
+  const [loading, setLoading] = useState(true);
  useEffect(() => {
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await axiosInstance.get(`/products/${id}`)
       if(response.data.success){
         const product = response.data.data
         setProductDetails(product)
-
         // fetch similar items after product loads
         const similarResponse = await axiosInstance.get("/products", {
           params: { category: product.category, limit: 4 }
@@ -40,6 +41,9 @@ const ProductPage = () => {
     catch(err){
       console.error("Error while fetching Data: ", err.message)
     }
+    finally{
+      setLoading(false);
+    }
   }
 
   fetchData()
@@ -49,28 +53,19 @@ const ProductPage = () => {
   }, 100)
 
 }, [id])
-  useEffect(()=>{
-    const fetchData = async () =>{
-      try{
-        const response = await axiosInstance.get(`/products`,
-          {
-            category : productDetails.category
-          }
-        );
-        console.log(response.data.data);
-        if(response.data.success){
-          setSimilarItems(response.data.data);
-        }
-        else{
-          console.log("No products found!");
-        }
-      }
-      catch(err){
-        console.error("Error while fetching Data: ", err.message);
-      }
-    }
-    fetchData();
-  },[id]);
+if(loading) return (
+  <div className="productPage">
+    <div className="productMainContent">
+      <div className="skeleton" style={{width: "420px", height: "420px", borderRadius: "12px"}} />
+      <div className="productInfoSection">
+        <div className="skeleton" style={{height: "30px", width: "60%"}} />
+        <div className="skeleton" style={{height: "20px", width: "40%", marginTop: "1rem"}} />
+        <div className="skeleton" style={{height: "80px", width: "100%", marginTop: "1rem"}} />
+        <div className="skeleton" style={{height: "50px", width: "100%", marginTop: "1rem"}} />
+      </div>
+    </div>
+  </div>
+)
   return (
   <div className="productPage">
 
@@ -81,7 +76,6 @@ const ProductPage = () => {
     </div>
 
     <div className="productMainContent">
-
       <div className="productImageSection">
         <img
           src={productDetails.image}
@@ -185,12 +179,11 @@ const ProductPage = () => {
        <div>
         <h1 className="text-4xl font-bold">Similar Items</h1>
         <div className="productList">
-
-          {
-            similarItems.map((item)=>(
-              <ProductCard key={item._id} product={item}></ProductCard>
-            ))
-          }
+            {loading ? <ProductCardSkeleton></ProductCardSkeleton> : 
+              similarItems.map((item)=>(
+                <ProductCard key={item._id} product={item}></ProductCard>
+              ))
+            }
         </div>
         </div>   
 
