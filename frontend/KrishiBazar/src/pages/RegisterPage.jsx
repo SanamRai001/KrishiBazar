@@ -22,14 +22,14 @@ const RegisterPage = () => {
     try{
       const response = await axiosInstance.post("/auth/register", {name, email, password, role});
       if(response.data.success){
-        notify("Registered successfully!")
+        notify("Registered successfully!", "pass")
         setTimeout(() => {
           navigate("/")
         }, 1500);
       }
     }
     catch(err){
-      notify("Registration Failed!");
+      notify("Registration Failed!", "fail");
       console.error("Error while Sending Data: ", err.message);
     }
   }

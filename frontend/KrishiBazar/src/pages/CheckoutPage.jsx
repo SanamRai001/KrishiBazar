@@ -28,6 +28,8 @@ const CheckoutPage = () => {
   const shippingAddress = {province: province, district: district, address: address};
   const { notify } = useNotification();  
   const navigate = useNavigate();
+  const [loading,  setLoading] = useState(true);
+
   const handleOrderSubmit = async () =>{
      if(!province || !district || !address){
       notify("Please  fill  all  fields", "fail");
@@ -62,16 +64,37 @@ const CheckoutPage = () => {
       }
     }
     catch(err){
-      notify("Backend Failure while placing order");
+      notify("Backend Failure while placing order", "fail");
       console.error("Error while placing Order: ", err.message);
     }
     
   }
   useEffect(()=>{
     if(!cartData?.buyNow){
-      fetchCart()
+      const  load = async() =>{
+        setLoading(true);
+        try{
+          await fetchCart()
+        }
+        catch(err){
+          console.error("Error  while fetching cart!: ", err.message);
+        }
+        finally{
+          setLoading(false);
+        }
+      }
+      load();
     }
   },[]);
+if(loading){
+  return(
+    <div className="checkOutPage">
+      <div className="deliverySection skeleton" style={{minHeight: "350px"}} />
+      <div className="paymentSection skeleton" style={{minHeight: "150px"}} />
+      <div className="orderSection skeleton" style={{minHeight: "450px"}} />
+    </div>
+  )
+}
   return (
     <>
       <div className="checkOutPage">

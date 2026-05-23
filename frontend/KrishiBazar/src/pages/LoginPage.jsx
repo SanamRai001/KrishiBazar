@@ -24,14 +24,14 @@ const LoginPage = () => {
         const token = response.data.token;
         const user = response.data.user;
         login({user}, token);
-        notify("User logged In successfully!");
+        notify("User logged In successfully!", "pass");
         setTimeout(() => {
             navigate("/")
           }, 1500)
       }
     }
     catch(err){
-      notify("Logging In failed!");
+      notify("Logging In failed!", "fail");
       console.error("Error while logging in.", err.message);
     }
   }
