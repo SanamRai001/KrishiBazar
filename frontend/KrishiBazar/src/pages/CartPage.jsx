@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useCart } from '../hooks/useCart'
 import CartItem from "../components/CartItem"
@@ -13,11 +13,38 @@ const CartPage = () => {
   const totalPrice = cartItems.reduce((sum, item) => {
     return sum + (item.product.price * item.quantity)
   }, 0)
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchCart()
+    const load = async()=>{
+      setLoading(true);
+      try{
+        await fetchCart();
+      }
+      catch(err){
+        console.log("Error  while fetching Cart: ", err.message);
+      }
+      finally{
+        setLoading(false);
+      }
+    }
+    load();
   }, [])
-
+if(loading){
+  return (
+    <div className="cartPage">
+      <div className="cart">
+        <div className="shoppingCart">
+          <div className="cartItemList">
+            {Array(3).fill(0).map((_, i) => (
+              <div key={i} className="cartItem skeleton" style={{height: "150px"}} />
+            ))}
+          </div>
+        </div>
+        <div className="orderSummary skeleton" style={{height: "300px"}} />
+      </div>
+    </div>
+  )
+}
   return (
     <>
     <div className="cartPage">
