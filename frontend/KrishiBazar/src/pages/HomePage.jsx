@@ -3,6 +3,7 @@ import { CATEGORIES, SORT_OPTIONS } from "../utils/constants"
 import { useEffect, useState } from "react"
 import axiosInstance from "../api/axiosInstance"
 import { useSearchParams } from "react-router-dom"
+import ProductCardSkeleton  from "../components/skeleton/ProductCardSkeleton"
 
 const HomePage = () => {
   const [category, setCategory] = useState("All");
@@ -12,7 +13,7 @@ const HomePage = () => {
   const [searchParams] = useSearchParams();
   const [pagination, setPagination] = useState({ totalPages: 0, total: 0, pageNumber: 1 });
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [loading, setLoading] = useState(true);
   const pages = [];
   for(let i = 0; i < pagination?.totalPages; i++){
     pages.push(
@@ -38,6 +39,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axiosInstance.get("/products", {
           params: {
@@ -56,6 +58,9 @@ const HomePage = () => {
       }
       catch(error){
         console.error("Error while fetching Products list: ", error.message);
+      }
+      finally{
+        setLoading(false);
       }
     }
     fetchData();
@@ -159,15 +164,19 @@ const HomePage = () => {
 
         <div>
           <div className="productList">
-            {products.length === 0 ? 
-            <div className="itemsNotFound">
-              <img src="/itemsNotFound.png" alt="" />
-              <h1>Items Not found</h1>
-              <p>We could not Found any items matching your Search</p>
-            </div> 
-            : products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+            {loading ? Array(8).fill(0).map((_,i)=>(
+              <ProductCardSkeleton key={i}></ProductCardSkeleton>
+            )) :
+              products.length === 0 ? 
+              <div className="itemsNotFound">
+                <img src="/itemsNotFound.png" alt="" />
+                <h1>Items Not found</h1>
+                <p>We could not Found any items matching your Search</p>
+              </div> 
+              : products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            }
           </div>
           <div className="pagination">
             {pages}
