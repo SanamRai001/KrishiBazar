@@ -8,6 +8,7 @@ export const AuthProvider = ({children}) => {
         return localStorage.getItem("token") || null;
     });
     const signedIn = Boolean(token);
+    
     const login = (userInfo, token)=>{
         setToken(token);
         localStorage.setItem("token", token);
@@ -20,7 +21,7 @@ export const AuthProvider = ({children}) => {
     }
     
   return (
-    <AuthContext.Provider value={{signedIn, userInfo, token, login, logout}}>
+    <AuthContext.Provider value={{signedIn, userInfo, token, login, logout, addProfile, userLocation}}>
         {children}
     </AuthContext.Provider>
     )
