@@ -148,13 +148,35 @@ h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 1rem;
 }
-.userAuth{
+
+.userLogIn{
   display: flex;
-  gap: 4px;
-  border: 1px solid var(--green-light);
-  border-radius: 9999px;
-  padding: 0.4rem;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: center;
 }
+.navUser{
+  display: flex;
+  gap: 0.1rem;
+  justify-content: center;
+}
+.userName{
+  color: var(--green-dark);
+  border-bottom: 2px solid rgb(112, 112, 112);
+}
+.logoutBtn{
+  color: rgb(107, 107, 107);
+}
+.userLogOut{
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  background-color: var(--green-dark);
+  color: var(--white);
+  padding: 0.3rem 1rem;
+  border-radius: 9999px;
+}
+
 .footer{
   display: grid;
   gap: 1rem;
