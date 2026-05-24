@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import  {useCart} from '../hooks/useCart'
+import {useAuth} from '../hooks/useAuth'
 import axiosInstance from "../api/axiosInstance";
 import { useNotification } from "../hooks/useNotification";
 const CheckoutPage = () => {
@@ -16,6 +17,7 @@ const CheckoutPage = () => {
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const  [address,  setAddress] = useState("");
+  const [number, setNumber] = useState("");
   const districts = province ? locationData[province] : [];
   const {cart, clearCart, fetchCart} = useCart();
   const location = useLocation();
@@ -25,11 +27,12 @@ const CheckoutPage = () => {
     const price = cartData?.buyNow ? item.price : item.product.price
     return sum + (price * item.quantity)
   }, 0);
+  const [initialized, setInitialized] = useState(false);
   const shippingAddress = {province: province, district: district, address: address};
   const { notify } = useNotification();  
   const navigate = useNavigate();
   const [loading,  setLoading] = useState(true);
-
+  const {fetchProfile, updateProfile, userInfo} = useAuth();
   const handleOrderSubmit = async () =>{
      if(!province || !district || !address){
       notify("Please  fill  all  fields", "fail");
@@ -51,6 +54,14 @@ const CheckoutPage = () => {
       if(response.data.success){
         notify("Order placed successfully", "pass");
         console.log("Orderplaced successfully");
+        updateProfile({
+          phoneNumber: number,
+          location:{
+            province: province,
+            district: district,
+            address: address
+          }
+        })
         if(!cartData?.buyNow){
           clearCart()
         }
@@ -70,6 +81,29 @@ const CheckoutPage = () => {
     
   }
   useEffect(()=>{
+    const loadProfile = async() =>{
+      try{
+        await fetchProfile();
+      }
+      catch(err){
+        console.error("Error while fetching profile in checkout", err.message);
+      }
+    }
+    loadProfile();
+  },[]);
+  useEffect(()=>{
+    if(!userInfo || initialized) return;
+    if(userInfo.location){
+      setProvince(userInfo.location.province);
+      setDistrict(userInfo.location.district);
+      setAddress(userInfo.location.address);
+    }
+    if(userInfo.phoneNumber){
+      setNumber(userInfo.phoneNumber);
+    }
+    setInitialized(true)
+  },[userInfo, initialized]);
+  useEffect(()=>{
     if(!cartData?.buyNow){
       const  load = async() =>{
         setLoading(true);
@@ -84,6 +118,9 @@ const CheckoutPage = () => {
         }
       }
       load();
+    }
+    else{
+      setLoading(false);
     }
   },[]);
 if(loading){
@@ -104,6 +141,8 @@ if(loading){
             e.preventDefault()
             handleOrderSubmit()
           }}>
+            <label htmlFor="">Phone Number</label>
+            <input type="tel" value={number} onChange={(e)=>setNumber(e.target.value)} />
             <label htmlFor="">Province</label>
             <select value={province} onChange={(e)=>{
               setProvince(e.target.value)
@@ -114,7 +153,7 @@ if(loading){
                 Object.keys(locationData).map((location)=>(
                   <option value={location} key={location}>{location}</option>
                 ))
-              }
+              } 
             </select>
             <label htmlFor="">District</label>
             <select value={district} onChange={(e)=>setDistrict(e.target.value) } disabled={!province}>
