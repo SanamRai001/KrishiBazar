@@ -24,7 +24,7 @@ const RegisterPage = () => {
       if(response.data.success){
         notify("Registered successfully!", "pass")
         setTimeout(() => {
-          navigate("/")
+          navigate("/login")
         }, 1500);
       }
     }
