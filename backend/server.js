@@ -17,7 +17,10 @@ connectDB();
 
 app.use(express.json());
 app.use(cors({
-    origin: 'https://krishi-bazar-alpha.vercel.app/',
+    origin: [
+    'http://localhost:5173',
+    'https://krishi-bazar-alpha.vercel.app'  
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
