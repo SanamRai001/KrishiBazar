@@ -110,7 +110,7 @@ if(loading) return (
         </div>
 
         <div className="productPageCalculation">
-          <div className="flex flex-row gap-4 justify-between items-center">
+          <div className="flex flex-row gap-4 justify-between items-center productPageCalculationQuantity">
             <p>Quantity</p>
             <div className="flex gap-2 items-center quantity bg-[#e0e0e0]">
               <button type="button" onClick={() => { if(quantity > 1) setQuantity(quantity - 1) }}>-</button>
@@ -129,7 +129,7 @@ if(loading) return (
               <button type="button" onClick={() => { if(quantity < 99) setQuantity(quantity + 1) }}>+</button>
             </div>
           </div>
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row justify-between items-center productPageCalculationPrice">
             <p>Total Price</p>
             <p className="text-green-600 text-3xl">Rs. {productDetails.price * quantity}</p>
           </div>
