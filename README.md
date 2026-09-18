@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/readme/system-banner.svg" width="100%" alt="KRISHI BAZAR"/>
+</p>
+
 # 🌾 Krishi Bazar — Agricultural E-Commerce Marketplace
 
 > Connecting Nepal's farmers directly to your kitchen. A full-stack MERN e-commerce platform where farmers list produce and buyers purchase directly — fresh from the field.
